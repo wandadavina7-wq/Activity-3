@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Activity 3: Choose the Best Response</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#1E3A5F;--pink:#D63F7D;--blue:#2B6CB0;--orange:#FF7A3D;--green:#2F9E44;--yellow:#FFD23F;--purple:#6741D9;--red:#E5383B;--sky:#CFEFFF}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{font-family:'Fredoka','Comic Sans MS','Trebuchet MS',sans-serif;color:var(--navy);background:linear-gradient(#bfe9ff,#eaf9ff 70%);min-height:100vh;padding-bottom:110px;position:relative;overflow-x:hidden}
+body::after{content:"";position:fixed;left:0;right:0;bottom:0;height:64px;background:#7BCB5B;border-top:5px solid #5fae42;z-index:0}
+.cloud{position:fixed;background:#fff;border:4px solid var(--navy);border-radius:60px;height:46px;z-index:0;opacity:.95;animation:drift 38s linear infinite}
+.cloud::before,.cloud::after{content:"";position:absolute;background:#fff;border:4px solid var(--navy);border-radius:50%}
+.cloud::before{width:44px;height:44px;left:16px;top:-26px;border-bottom-color:transparent;border-right-color:transparent}
+.cloud::after{width:34px;height:34px;left:58px;top:-18px;border-bottom-color:transparent;border-left-color:transparent}
+.c1{top:60px;width:120px;left:-160px}.c2{top:150px;width:90px;left:-160px;animation-delay:-18s;animation-duration:50s}
+@keyframes drift{to{transform:translateX(calc(100vw + 340px))}}
+.sun{position:fixed;top:14px;right:18px;font-size:54px;animation:spin 20s linear infinite;z-index:0}
+@keyframes spin{to{transform:rotate(360deg)}}
+main{position:relative;z-index:1;max-width:900px;margin:0 auto;padding:22px 16px}
+h1{font-size:clamp(26px,5vw,40px);margin:6px 0 2px;line-height:1.1}
+.sub{margin:0 0 14px;font-weight:500;color:var(--pink)}
+.steps{display:flex;gap:8px;margin:12px 0 18px;flex-wrap:wrap}
+.step{padding:6px 14px;border-radius:99px;background:#fff;border:3px solid var(--navy);font-weight:600;font-size:14px;opacity:.55}
+.step.on{opacity:1;background:var(--yellow)}
+.card{background:#fff;border:4px solid var(--navy);border-radius:24px;padding:20px;box-shadow:0 6px 0 var(--navy);margin-bottom:22px}
+label{display:block;font-weight:600;margin:14px 0 6px}
+input{width:100%;font:inherit;font-size:18px;padding:12px 14px;border:3px solid var(--navy);border-radius:14px;color:var(--navy);background:#fffef6}
+input:focus{outline:4px solid #ffd23f88}
+.btn{font:inherit;font-weight:700;font-size:20px;color:#fff;background:var(--pink);border:4px solid var(--navy);border-radius:18px;padding:12px 28px;cursor:pointer;box-shadow:0 5px 0 var(--navy);transition:transform .1s,box-shadow .1s;margin-top:20px}
+.btn:hover{transform:translateY(-2px)}.btn:active{transform:translateY(4px);box-shadow:0 1px 0 var(--navy)}
+.btn:disabled{background:#b9c3d0;cursor:not-allowed;box-shadow:0 5px 0 #7b8794}
+.btn.blue{background:var(--blue)}
+.err{color:var(--red);font-weight:600;min-height:22px;margin-top:8px}
+.sit{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px}
+.sc{display:flex;gap:10px;align-items:flex-start;background:#fff;border:3px solid var(--green);border-radius:16px;padding:10px 12px;font-size:15px}
+.sc.p{border-color:var(--purple)}
+.n{flex:none;width:30px;height:30px;border-radius:50%;background:var(--green);color:#fff;font-weight:700;display:grid;place-items:center;border:2px solid #fff;outline:2px solid var(--navy)}
+.sc.p .n{background:var(--purple)}
+.tag{display:inline-block;font-size:12px;font-weight:600;padding:2px 9px;border-radius:99px;background:var(--green);color:#fff;margin-top:3px}
+.sc.p .tag{background:var(--purple)}
+.bar{position:sticky;top:0;z-index:5;background:#fff;border:3px solid var(--navy);border-radius:99px;padding:8px 14px;margin-bottom:16px;display:flex;align-items:center;gap:12px;font-weight:600}
+.bar i{flex:1;height:14px;border-radius:99px;background:#e3edf7;border:2px solid var(--navy);overflow:hidden}
+.bar b{display:block;height:100%;width:0;background:var(--green);transition:width .3s}
+.q h3{margin:0 0 8px;font-size:20px;line-height:1.3}
+.qn{display:inline-grid;place-items:center;width:38px;height:38px;border-radius:50%;background:var(--blue);color:#fff;margin-right:8px;border:3px solid var(--navy)}
+.ctx{background:#fff7d6;border:3px dashed var(--orange);border-radius:14px;padding:8px 12px;margin:8px 0 12px;font-size:15px}
+.opt{display:flex;gap:10px;align-items:center;width:100%;text-align:left;font:inherit;font-size:17px;color:var(--navy);background:#fff;border:3px solid var(--navy);border-radius:14px;padding:10px 12px;margin:8px 0;cursor:pointer;transition:transform .1s,background .15s}
+.opt:hover{transform:translateX(4px);background:#eef8ff}
+.opt .l{flex:none;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font-weight:700;color:#fff;border:2px solid var(--navy)}
+.opt[data-i="0"] .l{background:var(--pink)}.opt[data-i="1"] .l{background:var(--blue)}.opt[data-i="2"] .l{background:var(--orange)}.opt[data-i="3"] .l{background:var(--green)}
+.opt.sel{background:#fff1b8;box-shadow:0 0 0 4px var(--yellow)}
+.opt.ok{background:#d9f7de;border-color:var(--green)}.opt.no{background:#ffe0e0;border-color:var(--red)}
+.score{display:flex;gap:20px;align-items:center;flex-wrap:wrap}
+.ring{width:150px;height:150px;border-radius:50%;display:grid;place-items:center;border:5px solid var(--navy);background:conic-gradient(var(--green) calc(var(--p)*1%),#ffd0d0 0)}
+.ring span{width:112px;height:112px;border-radius:50%;background:#fff;display:grid;place-items:center;font-size:38px;font-weight:700;border:4px solid var(--navy)}
+.chips{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+.chip{padding:8px 16px;border-radius:99px;font-weight:700;color:#fff;border:3px solid var(--navy)}
+.review{border-left:8px solid var(--green);padding:6px 12px;margin:12px 0;background:#f6fff7;border-radius:10px}
+.review.bad{border-color:var(--red);background:#fff6f6}
+.status{margin-top:14px;font-weight:600;padding:10px 14px;border-radius:14px;background:#eef8ff;border:3px solid var(--blue)}
+.fab{position:fixed;right:16px;bottom:74px;z-index:20;font:inherit;font-weight:700;background:var(--yellow);color:var(--navy);border:4px solid var(--navy);border-radius:99px;padding:10px 18px;cursor:pointer;box-shadow:0 4px 0 var(--navy)}
+.modal{position:fixed;inset:0;background:#1e3a5f99;z-index:30;display:none;align-items:center;justify-content:center;padding:16px}
+.modal.on{display:flex}.modal .card{max-width:760px;max-height:88vh;overflow:auto;margin:0;position:relative}
+.x{position:absolute;right:12px;top:10px;font:inherit;font-weight:700;border:3px solid var(--navy);background:#fff;border-radius:50%;width:36px;height:36px;cursor:pointer}
+.hide{display:none}
+@media(max-width:520px){.opt{font-size:16px}.fab{bottom:72px}}
+</style>
+</head>
+<body>
+<div class="cloud c1"></div><div class="cloud c2"></div><div class="sun">☀️</div>
+<main>
+<h1>Activity 3: Choose the Best Response</h1>
+<p class="sub">Congratulating · Complimenting · Responding</p>
+<div class="steps"><span class="step on" id="s1">1 · About you</span><span class="step" id="s2">2 · Quiz</span><span class="step" id="s3">3 · Result</span></div>
+
+<section id="p1" class="card">
+  <h2 style="margin-top:0">Hello! Let’s start 👋</h2>
+  <label for="nm">Name</label><input id="nm" autocomplete="name" placeholder="Your full name">
+  <label for="cl">Class</label><input id="cl" placeholder="Example: X-3">
+  <label for="dt">Date</label><input id="dt" type="date">
+  <label for="em">Your teacher’s email</label><input id="em" type="email" inputmode="email" autocomplete="off" placeholder="teacher@example.com"><span class="hint" style="margin-top:4px">Your result will be sent to this address.</span>
+  <details><summary>For teachers</summary><p>Results go to the email address typed above. The first time, FormSubmit sends a one-time activation email to that address. Click the link in it (check spam), then send one test result. After that every result arrives automatically. You can also share the link with your email filled in: add <b>?to=teacher@example.com</b> to the end of the web address.</p></details>
+  <div class="err" id="e1"></div>
+  <button class="btn" id="go">Next →</button>
+</section>
+
+<section id="p2" class="hide">
+  <div class="card"><h2 style="margin-top:0">The 8 situations</h2><p style="margin-top:0">Keep these in mind. You can open them again anytime with the yellow button.</p><div class="sit" id="sitGrid"></div></div>
+  <div class="bar"><span id="cnt">0/10</span><i><b id="pb"></b></i></div>
+  <div id="qs"></div>
+  <div class="err" id="e2"></div>
+  <button class="btn" id="sub" disabled>Submit my answers ✓</button>
+</section>
+
+<section id="p3" class="hide">
+  <div class="card">
+    <div class="score"><div class="ring" id="ring"><span id="sc"></span></div>
+    <div><h2 style="margin:0" id="msg"></h2><p style="margin:4px 0" id="who"></p>
+    <div class="chips"><span class="chip" style="background:var(--green)" id="cc"></span><span class="chip" style="background:var(--red)" id="wc"></span></div></div></div>
+    <div class="status" id="st"></div>
+    <button class="btn blue" id="cp">Copy my result</button>
+  </div>
+  <div class="card"><h2 style="margin-top:0">Review your answers</h2><div id="rev"></div></div>
+</section>
+</main>
+<button class="fab hide" id="fab">📋 8 Situations</button>
+<div class="modal" id="md"><div class="card"><button class="x" id="mx">✕</button><h2 style="margin-top:0">The 8 situations</h2><div class="sit" id="sitModal"></div></div></div>
+
+<script>
+const okEmail=e=>/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e);
+async function mail(to,subject,fields){try{const r=await fetch("https://formsubmit.co/ajax/"+to,{method:"POST",headers:{"Content-Type":"application/json",Accept:"application/json"},body:JSON.stringify({_subject:subject,_captcha:"false",_template:"table",...fields})});const j=await r.json();return j.success===true||j.success==="true"}catch(e){return false}}
+function copyText(t,btn){const done=()=>{const o=btn.textContent;btn.textContent="Copied ✓";setTimeout(()=>btn.textContent=o,1800)};if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(done,fb)}else fb();function fb(){const a=document.createElement("textarea");a.value=t;document.body.appendChild(a);a.select();try{document.execCommand("copy")}catch(e){}a.remove();done()}}
+/* ====== DATA ====== */
+const SIT=[
+["A close friend wins first place in a school speech contest.","Informal, face to face"],
+["A classmate shows a new drawing made for art class.","Informal, face to face"],
+["Your English teacher has just been appointed head of the department.","Polite, face to face"],
+["A friend posts a photo of her certificate after passing a science olympiad.","Informal, social media comment and reply"],
+["An exchange student from another country presents her hometown in class.","Polite, face to face"],
+["Your cousin has been accepted to the university she wanted.","Informal, voice message"],
+["Your school basketball team loses, but your friend played very well.","Informal, compliment on effort"],
+["The principal congratulates your class for winning the school cleanliness award, and you respond.","Formal, face to face"]];
+const Q=[
+{s:2,q:"You meet Mr. Hasan in the corridor. Which message fits best?",o:["“Congrats, Sir! Great job!”","“Congratulation for your position, Sir.”","“Congratulations on your new position, Sir. We are very happy for you.”","“Hey, Mr. Hasan, you finally got it!”"],a:2,e:"It uses a polite register and the correct pattern Congratulations on + noun. A is too casual, B has two grammar errors, and D sounds disrespectful."},
+{s:0,q:"Which reply completes the structure best: a core act and an extension?",o:["“Congrats!”","“Congrats! Your voice was so clear. How long did you practice?”","“Congratulations on winning the competition, Madam.”","“Wow, you won! I never thought you could.”"],a:1,e:"B has a core act plus an extension (a detail and a question). A has no extension, C is too formal for a close friend, and D is a backhanded compliment."},
+{s:7,q:"The principal congratulates your class. Which response is the most suitable?",o:["“It’s nothing, Sir. We only cleaned a little.”","“Yeah, we are the best class in this school!”","“Thank you, Sir. I did most of the cleaning myself.”","“Thank you, Sir. My classmates worked together, and our teacher helped us.”"],a:3,e:"D thanks first and shares the credit. A denies the success, B boasts and is too casual, and C praises oneself."},
+{s:3,q:"Which comment is best for a public post?",o:["“Congratulations on passing the olympiad! You worked so hard.”","“Finally! You were lucky this time.”","“Dear Madam, please accept my congratulations on your esteemed achievement.”","“CONGRATS!!!!!! AWESOME!!!!!!”"],a:0,e:"A is kind, specific, and suitable for a public comment. B sounds like teasing, C is too formal, and D looks like shouting."},
+{s:6,q:"Which sentence has the right social function?",o:["“Congratulations on the match!”","“It’s okay, everyone makes mistakes.”","“We lost, but you played really well. Your passes were amazing!”","“Good luck next time!”"],a:2,e:"C compliments effort. The team lost, so congratulating (A) does not fit. B is not a compliment and D is only a closing."},
+{s:1,q:"Which compliment is the most specific and natural between classmates?",o:["“Nice drawing.”","“The colors are so bright. How did you make it?”","“Your drawing is not bad for a beginner.”","“Madam, your artwork is truly impressive.”"],a:1,e:"B gives a detail and asks a question, which keeps the talk going. C is a backhanded compliment and D is too formal for a classmate."},
+{s:4,q:"After the exchange student’s presentation, which compliment is the most suitable?",o:["“Great job!”","“Your English is so good for a foreigner!”","“Your hometown looks boring, but you spoke well.”","“You explained your hometown very clearly. I really enjoyed it.”"],a:3,e:"D is polite, specific, and sincere. B comments on her being a foreigner and C is rude. A is acceptable but has no detail."},
+{s:5,q:"You send a voice message to your cousin. Which one sounds best?",o:["“Hi, Dinda! Congratulations on getting into your dream university! I’m so proud of you. Call me later, okay?”","“Congrats.”","“Dear Madam, I would like to congratulate you on your admission.”","“Finally! I thought you would fail.”"],a:0,e:"A is warm and complete: a name, a congratulation, a feeling, and a plan. B is flat, C is too formal for a cousin, and D is hurtful."},
+{s:3,q:"Her friends comment: “Congratulations on passing the olympiad! You worked so hard.” Which reply is the best?",o:["“It was easy. Anyone can pass it.”","“No, I didn’t work hard.”","“Thank you! I couldn’t have done it without my teacher.”","“Yes, I know. I’m smarter than all of you.”"],a:2,e:"C thanks and shares the credit. A and B refuse the praise, and D boasts."},
+{s:2,q:"A student says to Mr. Hasan: “Congrats, Sir! You’re awesome!” What is the main problem?",o:["The word Congrats is spelled wrongly.","The register is too casual for a teacher.","It is a compliment, but it should be a congratulation.","The sentence is too long."],a:1,e:"Congrats and awesome belong to informal talk with friends. A teacher calls for a polite or formal register."}];
+/* ====== APP ====== */
+const $=id=>document.getElementById(id),L="ABCD";let ans=Array(10).fill(null),info={};
+const sitHTML=()=>SIT.map((r,i)=>`<div class="sc ${r[1].startsWith('Informal')?'':'p'}"><div class="n">${i+1}</div><div>${r[0]}<br><span class="tag">${r[1]}</span></div></div>`).join("");
+$("sitGrid").innerHTML=$("sitModal").innerHTML=sitHTML();
+$("dt").value=new Date().toLocaleDateString('en-CA');$("em").value=new URLSearchParams(location.search).get("to")||"";
+const stepOn=n=>{["s1","s2","s3"].forEach((x,i)=>$(x).classList.toggle("on",i==n-1));["p1","p2","p3"].forEach((x,i)=>$(x).classList.toggle("hide",i!=n-1));$("fab").classList.toggle("hide",n!=2);scrollTo({top:0,behavior:"smooth"})};
+$("go").onclick=()=>{const n=$("nm").value.trim(),c=$("cl").value.trim(),d=$("dt").value,t=$("em").value.trim();if(!n||!c||!d||!t){$("e1").textContent="Please fill in your name, class, date, and your teacher’s email.";return}if(!okEmail(t)){$("e1").textContent="Please check your teacher’s email address.";return}info={n,c,d,t};$("e1").textContent="";stepOn(2)};
+$("qs").innerHTML=Q.map((x,i)=>`<div class="card q"><h3><span class="qn">${i+1}</span>${x.q}</h3><div class="ctx"><b>Situation ${x.s+1}</b> (${SIT[x.s][1]}): ${SIT[x.s][0]}</div>${x.o.map((o,j)=>`<button class="opt" data-q="${i}" data-i="${j}"><span class="l">${L[j]}</span><span>${o}</span></button>`).join("")}</div>`).join("");
+$("qs").onclick=e=>{const b=e.target.closest(".opt");if(!b||b.disabled)return;const q=+b.dataset.q,i=+b.dataset.i;ans[q]=i;document.querySelectorAll(`.opt[data-q="${q}"]`).forEach(x=>x.classList.toggle("sel",x===b));const k=ans.filter(v=>v!==null).length;$("cnt").textContent=k+"/10";$("pb").style.width=k*10+"%";$("sub").disabled=k<10};
+$("fab").onclick=()=>$("md").classList.add("on");$("mx").onclick=()=>$("md").classList.remove("on");$("md").onclick=e=>{if(e.target==$("md"))$("md").classList.remove("on")};
+$("sub").onclick=async()=>{
+  if(ans.includes(null)){$("e2").textContent="Please answer all 10 questions.";return}
+  const ok=Q.filter((x,i)=>ans[i]===x.a).length,bad=10-ok;
+  $("sc").textContent=ok+"/10";$("ring").style.setProperty("--p",ok*10);
+  $("msg").textContent=ok>=9?"Superstar! 🌟":ok>=7?"Great job! 🎉":ok>=5?"Good effort! 👍":"Keep practicing! 💪";
+  $("who").textContent=`${info.n} · ${info.c} · ${info.d}`;$("cc").textContent="Correct: "+ok;$("wc").textContent="Wrong: "+bad;
+  $("rev").innerHTML=Q.map((x,i)=>{const r=ans[i]===x.a;return `<div class="review ${r?'':'bad'}"><b>${i+1}. ${r?'✓ Correct':'✗ Wrong'}</b> <span style="opacity:.8">(Situation ${x.s+1})</span><br>Your answer: <b>${L[ans[i]]}</b>${r?'':` · Correct answer: <b>${L[x.a]}</b>`}<br><small>${x.e}</small></div>`}).join("");
+  stepOn(3);
+  const st=$("st");
+  const lines=Q.map((x,i)=>`${i+1}. chose ${L[ans[i]]} | correct ${L[x.a]} | ${ans[i]===x.a?'RIGHT':'WRONG'}`).join("\n");
+  const txt=`Activity 3 Quiz\nName: ${info.n}\nClass: ${info.c}\nDate: ${info.d}\nScore: ${ok}/10 (correct ${ok}, wrong ${bad})\n${lines}`;
+  $("cp").onclick=()=>copyText(txt,$("cp"));
+  st.textContent="Sending your result to "+info.t+"…";
+  const sent=await mail(info.t,`Activity 3 Quiz: ${info.n} (${info.c}) ${ok}/10`,{name:info.n,class:info.c,date:info.d,score:ok+"/10",correct:ok,wrong:bad,answers:lines});
+  st.textContent=sent?"✓ Your result was sent to "+info.t+".":"Your result could not be sent. Check the email address, or tap “Copy my result” and send it to your teacher.";
+};
+</script>
+</body>
+</html>
